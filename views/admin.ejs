@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>Document</title>
+	<link rel="stylesheet" href="/css/commen.css">
+</head>
+<body>
+	<script src="/js/jquery-3.3.1.js"></script>
+	<div class="admin">
+		<span>创建宝箱：</span><input type="text" class="inputBox">
+		<button class="buttonBox">创建</button><br>
+
+		<span>添加奖品：</span><input type="text" class="inputAddGood">
+		<button class="buttonAddGood">添加</button>
+		
+		<select id="selectRemoveGood">
+			<% goodList.forEach((item) => { %>
+				<option value="<%= item %>"><%= item %></option>
+
+			<% }) %>
+		</select>
+			<button id ="buttonRemoveGood">删除奖品</button>
+	</div>
+
+	<script>
+		var $inputBox = $('.inputBox');
+		var $buttonBox = $('.buttonBox');
+
+		$buttonBox.click(function () {
+
+			var number = $inputBox.val() || 10;
+
+			$.ajax({
+				url:'/api/createBox',
+				data:{number:number},
+				dataType:'JSON',
+				success:function (data) {
+					if(data.code === 0){
+						alert('添加成功');
+						window.location.reload();
+					}
+				}
+			})
+
+		})
+
+		var $inputAddGood = $('.inputAddGood');
+		var $buttonAddGood = $('.buttonAddGood');
+
+		$buttonAddGood.click(function () {
+			var good = $inputAddGood.val() ||'谢谢惠顾';
+			$.ajax({
+				url:'/api/addGood',
+				data:{good},
+				dataType:'JSON',
+				success:function (data) {
+					if(data.code === 0){
+						alert('添加成功');
+						window.location.reload();
+					}
+				}
+			})
+		})
+
+		var $selectRemoveGood = $('#selectRemoveGood');
+		var $buttonRemoveGood = $('#buttonRemoveGood');
+
+		$buttonRemoveGood.click(function () {
+
+			var deleteGood = $selectRemoveGood.val();
+
+			$.ajax({
+				url:'/api/removeGood',
+				data:{deleteGood},
+				dataType:'JSON',
+				success:function (data) {
+					if(data.code === 0){
+						alert('删除成功');
+						window.location.reload();
+					}
+				}
+
+			})
+		})
+	</script>
+</body>
+</html>

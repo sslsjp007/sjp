@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>Document</title>
+	<link rel="stylesheet" href="/css/commen.css">
+</head>
+<body>
+	<script src="/js/jquery-3.3.1.js"></script>
+
+	<div class="play">
+		<ul class="playList">
+			<%boxList.forEach((item)=>{%>
+				<% if(item.isCheck){ %>
+					<li class="sel" data-id="<%= item._id%>"></li>					
+				<% }else{ %>
+					<li class="noSel" data-id="<%= item._id%>"></li>
+				<% } %>
+			<% })%>
+		</ul>
+	</div>
+
+	<script>
+		var $playList = $('.playList');
+		var len = $playList.find('li').length
+		console.log(len)
+		$playList.on('touchstart','.noSel',function () {
+			var This = this;
+			var _id = this.dataset.id
+			
+			$.ajax({
+				url:'/api/winning',
+				data:{_id:_id},
+				dataType:'JSON',
+				success:function (data) {
+					if(data.code === 0 ){
+						This.className = 'sel'
+						alert(data.good)
+						if($playList.find('.noSel').length === 0){
+							$.ajax({
+								url:'/api/createBox',
+								data:{number:len},
+								dataType:'JSON',
+								success:function (data){
+									window.location.reload()
+								}
+							})
+							
+						}
+
+					}
+
+				}
+			})
+		})
+	</script>
+</body>
+</html>

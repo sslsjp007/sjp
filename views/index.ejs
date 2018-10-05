@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>Document</title>
+	<link rel="stylesheet" href="/css/commen.css">
+</head>
+<body>
+	<div class="index">
+		<% if(isLogin){ %>
+			欢迎您：<%- username %> <a href="/api/logout">退出</a>
+		<% } %>
+		<% if(isLogin){ %>
+			<a href="/page/play">开始游戏</a>
+			<a href="/page/info">兑奖信息</a>
+		<% }else{ %>
+			<a href="/page/login">登陆</a>
+			<a href="/page/reg">注册</a>
+		<% } %>
+	</div>
+
+	<script>
+		
+	</script>
+</body>
+</html>
